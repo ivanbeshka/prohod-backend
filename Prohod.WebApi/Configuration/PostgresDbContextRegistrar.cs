@@ -13,15 +13,15 @@ public static class PostgresDbContextRegistrar
     public static IServiceCollection AddPostgresDbContext(
         this IServiceCollection serviceCollection, IConfiguration configuration)
     {
-        var npgsqlDataSourceBuilder = 
-            new NpgsqlDataSourceBuilder(configuration.GetConnectionString(PostgresConnectionStringName));
+        var connectionString = configuration.GetConnectionString(PostgresConnectionStringName);
+        var npgsqlDataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
         npgsqlDataSourceBuilder.MapEnum<VisitRequestStatus>();
         npgsqlDataSourceBuilder.MapEnum<Role>();
-
+        var dataSource = npgsqlDataSourceBuilder.Build();
         return serviceCollection
             .AddDbContext<PostgresDbContext>(options => 
                 options
-                    .UseNpgsql(npgsqlDataSourceBuilder.Build())
+                    .UseNpgsql(dataSource)
                     .UseLazyLoadingProxies()
                 )
             .AddScoped<IAppDbContext, PostgresDbContext>();
