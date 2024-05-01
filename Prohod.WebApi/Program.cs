@@ -9,6 +9,7 @@ using Prohod.WebApi.VisitRequests.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
+    .AddCors()
     .AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
@@ -23,10 +24,12 @@ builder.Services
 
 var app = builder.Build();
 
+
 app.UseHsts();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
+app.UseCors(builder => builder.AllowAnyOrigin());
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
