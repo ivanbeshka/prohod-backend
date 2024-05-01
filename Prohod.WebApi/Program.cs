@@ -9,6 +9,7 @@ using Prohod.WebApi.VisitRequests.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 builder.Logging.AddDebug();
 builder.Services.AddHttpLogging(o => { });
 
