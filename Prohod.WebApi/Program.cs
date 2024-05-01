@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Logging.ClearProviders();
 builder.Logging.AddDebug();
+builder.Services.AddHttpLogging(o => { });
 
 builder.Services
     .AddCors();
@@ -29,6 +30,7 @@ builder.Services
 
 var app = builder.Build();
 
+app.UseHttpLogging();
 app.UseHsts();
 app.UseSwagger();
 app.UseSwaggerUI();
