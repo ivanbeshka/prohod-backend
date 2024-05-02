@@ -36,7 +36,12 @@ app.UseHsts();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
-app.UseCors(builder => builder.AllowAnyOrigin());
+app.UseCors(builder => 
+    builder
+        .AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+);
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
