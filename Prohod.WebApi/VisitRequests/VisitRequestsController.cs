@@ -28,7 +28,6 @@ public class VisitRequestsController : ControllerBase
         this.errorVisitor = errorVisitor;
     }
 
-    [AuthorizedRoles(Role.Admin, Role.Security, Role.User)]
     [HttpPost("apply")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult> ApplyForm([FromBody] ApplyFormRequest request)

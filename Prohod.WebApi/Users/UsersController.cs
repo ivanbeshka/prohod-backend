@@ -15,7 +15,6 @@ public class UsersController : ControllerBase
         this.usersRepository = usersRepository;
     }
 
-    [AuthorizedRoles(Role.Security, Role.Admin, Role.User)]
     [HttpGet()]
     public async Task<ActionResult<GetAvailableToVisitUsersResponse>> GetAvailableToVisitUsers()
     {
