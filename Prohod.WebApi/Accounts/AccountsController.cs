@@ -67,7 +67,7 @@ public class AccountsController : ControllerBase
             : new CreateAccountResponse(credentials);
     }
     
-    [AuthorizedRoles(Role.Security)]
+    [AuthorizedRoles(Role.Security, Role.Admin)]
     [HttpPost("users/create")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
