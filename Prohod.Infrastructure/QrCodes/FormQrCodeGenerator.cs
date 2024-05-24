@@ -12,8 +12,8 @@ public class FormQrCodeGenerator : IFormQrCodeGenerator
         var html =
             $"{form.Passport.FullName}\n" +
             $"Паспорт: {form.Passport.Series} {form.Passport.Number}\n" +
-            $"Выдан: {form.Passport.IssueDate}\n" +
-            $"Дата посещения: {form.VisitTime}\n\n" +
+            $"Выдан: {form.Passport.IssueDate.ToString("dd.MM.yyyy")}\n" +
+            $"Дата посещения: {form.VisitTime.ToString("dd.MM.yyyy")}\n\n" +
             $"Посещение одобрено";
         var data = generator.CreateQrCode(html, QRCodeGenerator.ECCLevel.Q);
         return new Base64QRCode(data).GetGraphic(20);
