@@ -9,7 +9,7 @@ public class EmailQrCodeSender : IEmailQrCodeSender
     public async Task SendAsync(string base64QrCode, string email)
     {
         var message = new MimeMessage();
-        var from = new MailboxAddress("back", "prohod@prohod.com");
+        var from = new MailboxAddress("back", "prohodsmtpclient@gmail.com");
         var to = new MailboxAddress("user", email);
         message.From.Add(from);
         message.To.Add(to);
@@ -19,12 +19,12 @@ public class EmailQrCodeSender : IEmailQrCodeSender
 
         using var smtpClient = new SmtpClient();
         
-        await smtpClient.ConnectAsync("app.debugmail.io", 9025);
+        await smtpClient.ConnectAsync("smtp.gmail.com", 587);
 
         await smtpClient.AuthenticateAsync(
             Encoding.UTF8,
-            "3db54046-29d8-4254-b3d2-9ad868022356",
-            "e5a65b2e-d39f-4bf2-97fd-aa87740bcbbc");
+            "prohodsmtpclient@gmail.com",
+            "qoci txqw eqzc yajn");
 
         await smtpClient.SendAsync(message);
         

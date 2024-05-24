@@ -5,13 +5,16 @@ namespace Prohod.Infrastructure.QrCodes;
 
 public class FormQrCodeGenerator : IFormQrCodeGenerator
 {
+    private readonly QRCodeGenerator generator = new();
+
     public string GenerateBase64QrCode(Form form)
     {
-        var generator = new QRCodeGenerator();
         var html =
-            $"Passport = {form.Passport}, " +
-            $"VisitTime = {form.VisitTime}, " +
-            $"UserToVisit = {form.UserToVisit.Name + " " + form.UserToVisit.Surname}";
+            $"{form.Passport.FullName}\n" +
+            $"Паспорт: {form.Passport.Series} {form.Passport.Number}\n" +
+            $"Выдан: {form.Passport.IssueDate}\n" +
+            $"Дата посещения: {form.VisitTime}\n\n" +
+            $"Посещение одобрено";
         var data = generator.CreateQrCode(html, QRCodeGenerator.ECCLevel.Q);
         return new Base64QRCode(data).GetGraphic(20);
     }
