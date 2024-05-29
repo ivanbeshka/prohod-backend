@@ -36,20 +36,31 @@ public class VisitRequestsController : ControllerBase
 
         return applyResult.TryGetFault(out var fault)
             ? fault.Accept(errorVisitor)
-            : CreatedAtAction(nameof(GetNotProcessedVisitRequestsPage), null);
+            : CreatedAtAction(nameof(GetActiveVisitRequestsPage), null);
     }
     
     [AuthorizedRoles(Role.Security)]
-    [HttpGet("statuses/not-processed")]
+    [HttpGet("active")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<GetVisitRequestsPageResponse>> GetNotProcessedVisitRequestsPage(
+    public async Task<ActionResult<GetVisitRequestsPageResponse>> GetActiveVisitRequestsPage(
         int offset = 0, int limit = 10)
     {
-        var notProcessedVisitRequests = await visitRequestsService.GetNotProcessedVisitRequestsPage(offset, limit);
+        var activeVisitRequests = await visitRequestsService.GetActiveVisitRequestsPage(offset, limit);
 
-        return Ok(new GetVisitRequestsPageResponse(notProcessedVisitRequests));
+        return Ok(new GetVisitRequestsPageResponse(activeVisitRequests));
     }
-    
+
+    [AuthorizedRoles(Role.Security)]
+    [HttpGet("unactive")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<GetVisitRequestsPageResponse>> GetUnactiveVisitRequestsPage(
+        int offset = 0, int limit = 10)
+    {
+        var unactiveVisitRequests = await visitRequestsService.GetUnactiveVisitRequestsPage(offset, limit);
+
+        return Ok(new GetVisitRequestsPageResponse(unactiveVisitRequests));
+    }
+
     [AuthorizedRoles(Role.Security)]
     [HttpGet("who-processed/{userId:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]

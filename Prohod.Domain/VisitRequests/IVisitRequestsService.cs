@@ -14,8 +14,10 @@ public interface IVisitRequestsService
     
     Task<Result<IOperationError>> RejectRequestAsync(Guid visitRequestId, Guid whoProcessedId, string rejectionReason);
 
-    Task<IReadOnlyList<VisitRequest>> GetNotProcessedVisitRequestsPage(int offset, int limit);
-    
+    Task<IReadOnlyList<VisitRequest>> GetActiveVisitRequestsPage(int offset, int limit);
+
+    Task<IReadOnlyList<VisitRequest>> GetUnactiveVisitRequestsPage(int offset, int limit);
+
     Task<IReadOnlyList<VisitRequest>> GetVisitRequestsPage(int offset, int limit);
     
     Task<Result<EntityNotFoundError<User>, IReadOnlyList<VisitRequest>>> GetUserProcessedVisitRequestsPage(

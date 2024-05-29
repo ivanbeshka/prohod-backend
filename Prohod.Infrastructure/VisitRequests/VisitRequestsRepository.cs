@@ -14,9 +14,14 @@ public class VisitRequestsRepository : RepositoryBase<VisitRequest>, IVisitReque
         this.dbContext = dbContext;
     }
 
-    public Task<IReadOnlyList<VisitRequest>> GetNotProcessedVisitRequestsPageAsync(int offset, int limit)
+    public Task<IReadOnlyList<VisitRequest>> GetActiveVisitRequestsPageAsync(int offset, int limit)
     {
-        return GetVisitRequestsPageAsync(request => request.Status == VisitRequestStatus.NotProcessed, offset, limit);
+        return GetVisitRequestsPageAsync(request => request.Form.VisitTime.Date >= DateTime.Now.Date, offset, limit);
+    }
+
+    public Task<IReadOnlyList<VisitRequest>> GetUnactiveVisitRequestsPageAsync(int offset, int limit)
+    {
+        return GetVisitRequestsPageAsync(request => request.Form.VisitTime.Date < DateTime.Now.Date, offset, limit);
     }
 
     public Task<IReadOnlyList<VisitRequest>> GetVisitRequestsPageAsync(int offset, int limit)

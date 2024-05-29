@@ -92,9 +92,14 @@ public class VisitRequestsService : IVisitRequestsService
         return Result.Succeed();
     }
 
-    public async Task<IReadOnlyList<VisitRequest>> GetNotProcessedVisitRequestsPage(int offset, int limit)
+    public async Task<IReadOnlyList<VisitRequest>> GetActiveVisitRequestsPage(int offset, int limit)
     {
-        return await visitRequestsRepository.GetNotProcessedVisitRequestsPageAsync(offset, limit);
+        return await visitRequestsRepository.GetActiveVisitRequestsPageAsync(offset, limit);
+    }
+
+    public async Task<IReadOnlyList<VisitRequest>> GetUnactiveVisitRequestsPage(int offset, int limit)
+    {
+        return await visitRequestsRepository.GetUnactiveVisitRequestsPageAsync(offset, limit);
     }
 
     public async Task<IReadOnlyList<VisitRequest>> GetVisitRequestsPage(int offset, int limit)
