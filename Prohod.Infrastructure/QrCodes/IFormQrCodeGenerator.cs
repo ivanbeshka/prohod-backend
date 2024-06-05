@@ -5,5 +5,5 @@ namespace Prohod.Infrastructure.QrCodes;
 
 public interface IFormQrCodeGenerator
 {
-    string GenerateBase64QrCode(Form form);
+    string GenerateBase64QrCode(Guid visitRequestId);
 }

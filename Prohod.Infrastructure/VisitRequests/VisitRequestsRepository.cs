@@ -16,12 +16,12 @@ public class VisitRequestsRepository : RepositoryBase<VisitRequest>, IVisitReque
 
     public Task<IReadOnlyList<VisitRequest>> GetActiveVisitRequestsPageAsync(int offset, int limit)
     {
-        return GetVisitRequestsPageAsync(request => request.Form.VisitTime.Date >= DateTime.Now.Date, offset, limit);
+        return GetVisitRequestsPageAsync(request => ((DateTimeOffset) request.Form.VisitTime).Date >= ((DateTimeOffset) DateTime.Now).Date, offset, limit);
     }
 
     public Task<IReadOnlyList<VisitRequest>> GetUnactiveVisitRequestsPageAsync(int offset, int limit)
     {
-        return GetVisitRequestsPageAsync(request => request.Form.VisitTime.Date < DateTime.Now.Date, offset, limit);
+        return GetVisitRequestsPageAsync(request => ((DateTimeOffset) request.Form.VisitTime).Date < ((DateTimeOffset)DateTime.Now).Date, offset, limit);
     }
 
     public Task<IReadOnlyList<VisitRequest>> GetVisitRequestsPageAsync(int offset, int limit)

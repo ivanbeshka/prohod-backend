@@ -1,5 +1,6 @@
 ﻿using Prohod.Domain.Forms;
 using Prohod.Domain.QrCodes;
+using Prohod.Domain.VisitRequests;
 
 namespace Prohod.Infrastructure.QrCodes;
 
@@ -14,8 +15,8 @@ public class QrCodesService : IQrCodesService
         this.codeGenerator = codeGenerator;
     }
     
-    public async Task CreateAndSendQrCodeAsync(Form form)
+    public async Task CreateAndSendQrCodeAsync(VisitRequest visitRequest)
     {
-        await codeSender.SendAsync(codeGenerator.GenerateBase64QrCode(form), form.EmailToSendReply);
+        await codeSender.SendAsync(codeGenerator.GenerateBase64QrCode(visitRequest.Id), visitRequest.Form.EmailToSendReply);
     }
 }

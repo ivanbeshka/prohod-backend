@@ -22,4 +22,6 @@ public interface IVisitRequestsService
     
     Task<Result<EntityNotFoundError<User>, IReadOnlyList<VisitRequest>>> GetUserProcessedVisitRequestsPage(
         Guid userId, int offset, int limit);
+
+    Task<Result<EntityNotFoundError<VisitRequest>, VisitRequest>> GetVisitRequestById(Guid id);
 }

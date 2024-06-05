@@ -7,6 +7,7 @@ using Prohod.WebApi.VisitRequests.Models.AcceptVisitRequest;
 using Prohod.WebApi.VisitRequests.Models.ApplyForm;
 using Prohod.WebApi.VisitRequests.Models.GetVisitRequestsPage;
 using Prohod.WebApi.VisitRequests.Models.RejectVisitRequest;
+using System.Collections.Generic;
 
 namespace Prohod.WebApi.VisitRequests;
 
@@ -38,7 +39,21 @@ public class VisitRequestsController : ControllerBase
             ? fault.Accept(errorVisitor)
             : CreatedAtAction(nameof(GetActiveVisitRequestsPage), null);
     }
-    
+
+    [AuthorizedRoles(Role.Security)]
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<VisitRequest>> GetVisitRequestById([FromRoute] Guid id) 
+    {
+        var visitRequestOpt =
+            await visitRequestsService.GetVisitRequestById(id);
+
+        return visitRequestOpt.TryGetValue(out var visitRequest, out var fault)
+            ? Ok(visitRequest)
+            : fault.Accept(errorVisitor);
+    }
+
     [AuthorizedRoles(Role.Security)]
     [HttpGet("active")]
     [ProducesResponseType(StatusCodes.Status200OK)]

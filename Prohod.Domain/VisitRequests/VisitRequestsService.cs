@@ -62,7 +62,7 @@ public class VisitRequestsService : IVisitRequestsService
 
         await visitRequestsRepository.UpdateAsync(visitRequest);
 
-        await qrCodesService.CreateAndSendQrCodeAsync(visitRequest.Form);
+        await qrCodesService.CreateAndSendQrCodeAsync(visitRequest);
         
         return Result.Succeed();
     }
@@ -116,5 +116,10 @@ public class VisitRequestsService : IVisitRequestsService
             ? Result.Succeed(
                 await visitRequestsRepository.GetUserProcessedVisitRequestsPageAsync(userId, offset, limit))
             : EntityNotFoundError<User>.FromId(userId);
+    }
+
+    public async Task<Result<EntityNotFoundError<VisitRequest>, VisitRequest>> GetVisitRequestById(Guid id)
+    { 
+        return await visitRequestsRepository.FindAsync(id);
     }
 }

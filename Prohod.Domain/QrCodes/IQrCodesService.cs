@@ -1,8 +1,8 @@
-﻿using Prohod.Domain.Forms;
+﻿using Prohod.Domain.VisitRequests;
 
 namespace Prohod.Domain.QrCodes;
 
 public interface IQrCodesService
 {
-    Task CreateAndSendQrCodeAsync(Form form);
+    Task CreateAndSendQrCodeAsync(VisitRequest visitRequest);
 }
